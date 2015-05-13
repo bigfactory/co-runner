@@ -1,0 +1,19 @@
+{
+  "name": "co-runner",
+  "version": "0.1.0",
+  "description": "coroutine runner",
+  "main": "index.js",
+  "author": {
+    "name": "hxc",
+    "email": "xiaocong.hxc@qq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigfactory/co-runner.git"
+  },
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "thunkify": "^2.1.2"
+  }
+}
