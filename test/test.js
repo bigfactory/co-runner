@@ -10,25 +10,27 @@ var getFile = thunkify(function(){
 describe('co-runner', function() {
     it('should exactly the same result', function(done) {
 
-        function* getFileGenerator() {
-            var list = [
-                path.join(__dirname, './files/1.txt'), 
-                path.join(__dirname, './files/2.txt')
-            ];
+        function* getFileGenerator(list) {
             var result = [];
             var content;
-
             for (var i = 0, len = list.length; i < len; i++) {
                 content = yield getFile(list[i]);
                 result.push(content);
             }
-            
             return result;
         }
 
-        runner(getFileGenerator(), function(err, result){
+
+        var list = [
+            path.join(__dirname, './files/1.txt'), 
+            path.join(__dirname, './files/2.txt')
+        ];
+
+        console.log(list)
+
+
+        runner(getFileGenerator(list), function(err, result){
             if(err){
-                //return false to break the flow
                 return false;
             }
             result.length.should.be.eql(2);
