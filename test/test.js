@@ -1,3 +1,4 @@
+var path = require('path');
 var fs = require('fs');
 var thunkify = require('thunkify');
 var runner = require('../');
@@ -6,23 +7,34 @@ var getFile = thunkify(function(){
     fs.readFile.apply(fs, arguments);
 });
 
-function* getFileGenerator() {
-    var list = ['./files/1.txt', './files/2.txt'];
-    var result = [];
-    var content;
+describe('co-runner', function() {
+    it('should exactly the same result', function(done) {
 
-    for (var i = 0, len = list.length; i < len; i++) {
-        content = yield getFile(list[i]);
-        result.push(content);
-    }
-    
-    return result;
-}
+        function* getFileGenerator() {
+            var list = [
+                path.join(__dirname, './files/1.txt'), 
+                path.join(__dirname, './files/2.txt')
+            ];
+            var result = [];
+            var content;
 
-runner(getFileGenerator, function(err, result){
-    if(err){
-        //return false to break the flow
-        return false;
-    }
-    console.log(result);
+            for (var i = 0, len = list.length; i < len; i++) {
+                content = yield getFile(list[i]);
+                result.push(content);
+            }
+            
+            return result;
+        }
+
+        runner(getFileGenerator(), function(err, result){
+            if(err){
+                //return false to break the flow
+                return false;
+            }
+            result.length.should.be.eql(2);
+            result[0].toString().should.be.eql('abc');
+            result[1].toString().should.be.eql('ddd');
+            done();
+        });
+    });
 });

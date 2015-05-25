@@ -1,5 +1,5 @@
-function coRunner(genFn, callback) {
-    var generator = genFn();
+function coRunner(generator, callback) {
+    // var generator = genFn();
     var result = generator.next();
 
     function check(result) {

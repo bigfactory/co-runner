@@ -23,7 +23,7 @@ function* getFileGenerator() {
     return result;
 }
 
-runner(getFileGenerator, function(err, result){
+runner(getFileGenerator(), function(err, result){
     if(err){
         //return false to break the flow
         return false;
